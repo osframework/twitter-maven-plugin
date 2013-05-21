@@ -1,25 +1,102 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>org.osframework.maven.plugins</groupId>
-  <artifactId>twitter-maven-plugin</artifactId>
-  <packaging>maven-plugin</packaging>
-  <version>1.0-SNAPSHOT</version>
+	<modelVersion>4.0.0</modelVersion>
 
-  <name>Twitter Maven Plugin</name>
-  <url>http://maven.apache.org</url>
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>7</version>
+	</parent>
 
-  <dependencies>
-    <dependency>
-      <groupId>org.apache.maven</groupId>
-      <artifactId>maven-plugin-api</artifactId>
-      <version>2.0</version>
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
+	<groupId>org.osframework.maven.plugins</groupId>
+	<artifactId>twitter-maven-plugin</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>maven-plugin</packaging>
+
+
+	<name>Twitter Maven Plugin</name>
+	<description>Posts Twitter updates from Maven build lifecycle</description>
+	<url>http://osframework.org/projects/twitter-maven-plugin/</url>
+	<inceptionYear>2013</inceptionYear>
+
+	<organization>
+		<name>OSFramework Project</name>
+		<url>http://osframework.org/</url>
+	</organization>
+
+	<licenses>
+		<license>
+			<name>Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<id>davejoyce</id>
+			<name>Dave Joyce</name>
+			<email>dave@osframework.org</email>
+			<timezone>-5</timezone>
+			<roles>
+				<role>Project Lead</role>
+			</roles>
+		</developer>
+	</developers>
+
+	<scm>
+		<url>git@github.com/osframework/twitter-maven-plugin.git</url>
+		<connection>scm:git:git://github.com/osframework/twitter-maven-plugin.git</connection>
+		<developerConnection>scm:git:https://github.com/osframework/twitter-maven-plugin.git</developerConnection>
+	</scm>
+	<issueManagement>
+		<system>GitHub</system>
+		<url>https://github.com/osframework/twitter-maven-plugin/issues</url>
+	</issueManagement>
+
+	<distributionManagement>
+		<site>
+			<id>osframework-project-site</id>
+			<url>scp://osframework.org/home/osfservice/osframework.org/projects/twitter-maven-plugin/</url>
+		</site>
+	</distributionManagement>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.build.javaVersion>1.6</project.build.javaVersion>
+		<maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
+		<buildTimestamp>${maven.build.timestamp}</buildTimestamp>
+
+		<!-- Dependency versions -->
+		<commons-lang.version>2.6</commons-lang.version>
+		<maven-plugin-api.version>3.0.5</maven-plugin-api.version>
+		<testng.version>6.8</testng.version>
+
+		<!-- Plugin versions -->
+		<maven-compiler-plugin.version>3.0</maven-compiler-plugin.version>
+		<maven-surefire-plugin.version>2.12.4</maven-surefire-plugin.version>
+		<maven-bundle-plugin.version>2.3.7</maven-bundle-plugin.version>
+		<maven-jar-plugin.version>2.4</maven-jar-plugin.version>
+		<maven-source-plugin.version>2.2.1</maven-source-plugin.version>
+		<maven-javadoc-plugin.version>2.9</maven-javadoc-plugin.version>
+		<maven-deploy-plugin.version>2.7</maven-deploy-plugin.version>
+		<maven-gpg-plugin.version>1.4</maven-gpg-plugin.version>
+		<wagon-webdav-jackrabbit.version>2.2</wagon-webdav-jackrabbit.version>
+		<wagon-ssh.version>2.3</wagon-ssh.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-plugin-api</artifactId>
+			<version>${maven-plugin-api.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<version>${testng.version}</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 </project>
