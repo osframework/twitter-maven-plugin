@@ -70,7 +70,9 @@
 		<!-- Dependency versions -->
 		<commons-lang.version>2.6</commons-lang.version>
 		<maven-plugin-api.version>3.0.5</maven-plugin-api.version>
+		<maven-project.version>3.0-alpha-2</maven-project.version>
 		<testng.version>6.8</testng.version>
+		<twitter4j-core.version>[3.0,)</twitter4j-core.version>
 
 		<!-- Plugin versions -->
 		<maven-compiler-plugin.version>3.0</maven-compiler-plugin.version>
@@ -91,6 +93,22 @@
 			<artifactId>maven-plugin-api</artifactId>
 			<version>${maven-plugin-api.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-project</artifactId>
+			<version>${maven-project.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.codehaus.plexus</groupId>
+					<artifactId>plexus-utils</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.twitter4j</groupId>
+			<artifactId>twitter4j-core</artifactId>
+			<version>${twitter4j-core.version}</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.testng</groupId>
@@ -99,4 +117,18 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven-compiler-plugin.version}</version>
+				<configuration>
+					<source>${project.build.javaVersion}</source>
+					<target>${project.build.javaVersion}</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
