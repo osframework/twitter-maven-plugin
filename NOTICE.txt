@@ -1,0 +1,6 @@
+   Twitter Maven Plugin
+   Copyright 2013 OSFramework Project
+
+   Twitter Maven Plugin includes Twitter4J. The original software is licensed
+   under the Apache License, Version 2.0. Twitter4J is available from
+      http://twitter4j.org/

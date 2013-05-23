@@ -73,14 +73,16 @@ public abstract class AbstractTwitterMojo extends AbstractMojo {
 	protected MavenProject project;
 
 	/**
-	 * Working directory for <tt>twitter-maven-plugin</tt> mojos.
+	 * Working directory for <tt>twitter-maven-plugin</tt> mojos. Subclasses
+	 * access this value via {@link #getWorkDirectory()}. 
 	 */
 	@Parameter(property = WORK_DIRECTORY,
 			   defaultValue = "${project.build.directory}/twitter")
 	private File workDirectory;
 
 	/**
-	 * Character encoding of {@link #message}.
+	 * Character encoding of {@link #message}. Subclasses access this value via
+	 * {@link #getEncoding()}.
 	 */
 	@Parameter(property = ENCODING,
 			   defaultValue = "${project.build.sourceEncoding}")
@@ -136,14 +138,12 @@ public abstract class AbstractTwitterMojo extends AbstractMojo {
 		if (!isMaven3OrGreater()) {
 			throw new MojoExecutionException("Requires at least Maven version " + MAVEN_MIN_VERSION);
 		}
-		Twitter twitter = null;
 		try {
-			twitter = getAuthenticatedTwitter();
+			executeInTwitter(getAuthenticatedTwitter());
+			storeAccessToken();
 		} catch (TwitterException te) {
 			throw new MojoFailureException("Could not create authorized Twitter session", te);
 		}
-		executeInTwitter(twitter);
-		storeAccessToken();
 	}
 
 	/**
@@ -196,6 +196,11 @@ public abstract class AbstractTwitterMojo extends AbstractMojo {
 		}
 	}
 
+	/**
+	 * Get work directory for this mojo.
+	 * 
+	 * @return work directory, never <code>null</code>
+	 */
 	protected File getWorkDirectory() {
 		if (null == workDirectory) {
 			workDirectory = getDefaultWorkDirectory();
@@ -208,40 +213,7 @@ public abstract class AbstractTwitterMojo extends AbstractMojo {
 		return workDirectory;
 	}
 
-	protected static boolean isMaven3OrGreater() {
-		return (0 <= new ComparableVersion(getMavenVersion()).compareTo(new ComparableVersion("3.0")));
-	}
-
-	protected static String getMavenVersion() {
-		final Properties properties = new Properties();
-		final InputStream in = MavenProject.class.getClassLoader().getResourceAsStream("META-INF/maven/org.apache.maven/maven-core/pom.properties");
-		try {
-			properties.load(in);
-		} catch (IOException ioe) {
-			return "";
-		} finally {
-			IOUtil.close(in);
-		}
-		return properties.getProperty("version").trim();
-	}
-
-	private File getDefaultWorkDirectory() {
-		final StringBuilder buf = new StringBuilder(project.getBuild().getDirectory()).append(File.separatorChar).append("twitter");
-		return new File(buf.toString());
-	}
-
-	private Twitter getAuthenticatedTwitter() throws TwitterException {
-		if (StringUtils.isBlank(consumerKey) || StringUtils.isBlank(consumerSecret)) {
-			throw new TwitterException("Missing required credentials");
-		}
-		Twitter twitter = TwitterFactory.getSingleton();
-		twitter.setOAuthConsumer(consumerKey, consumerSecret);
-		loadAccessToken(twitter);
-		twitter.setOAuthAccessToken(authToken);
-		return twitter;
-	}
-
-	private void loadAccessToken(final Twitter twitter) throws TwitterException {
+	protected void loadAccessToken(final Twitter twitter) throws TwitterException {
 		// Check for stored access token
 		File tokenStore = new File(getWorkDirectory(), "auth");
 		if (tokenStore.canRead()) {
@@ -280,7 +252,7 @@ public abstract class AbstractTwitterMojo extends AbstractMojo {
 		}
 	}
 
-	private void storeAccessToken() {
+	protected void storeAccessToken() {
 		if (null == authToken) {
 			return;
 		}
@@ -298,6 +270,53 @@ public abstract class AbstractTwitterMojo extends AbstractMojo {
 		} finally {
 			IOUtil.close(out);
 		}
+	}
+
+	/**
+	 * Determine if the version of Maven executing this mojo is greater than or
+	 * equal to <tt>3.0</tt>.
+	 * 
+	 * @return <code>true</code> if Maven version is 3.0+,
+	 *         <code>false</code> otherwise
+	 */
+	protected static boolean isMaven3OrGreater() {
+		return (0 <= new ComparableVersion(getMavenVersion()).compareTo(new ComparableVersion("3.0")));
+	}
+
+	/**
+	 * Get version of Maven executing this mojo. The Maven version is obtained
+	 * from the POM properties of <tt>maven-core</tt>, which should always be
+	 * loaded by the core ClassLoader.
+	 * 
+	 * @return Maven version
+	 */
+	protected static String getMavenVersion() {
+		final Properties properties = new Properties();
+		final InputStream in = MavenProject.class.getClassLoader().getResourceAsStream("META-INF/maven/org.apache.maven/maven-core/pom.properties");
+		try {
+			properties.load(in);
+		} catch (IOException ioe) {
+			return "";
+		} finally {
+			IOUtil.close(in);
+		}
+		return properties.getProperty("version").trim();
+	}
+
+	private File getDefaultWorkDirectory() {
+		final StringBuilder buf = new StringBuilder(project.getBuild().getDirectory()).append(File.separatorChar).append("twitter");
+		return new File(buf.toString());
+	}
+
+	private Twitter getAuthenticatedTwitter() throws TwitterException {
+		if (StringUtils.isBlank(consumerKey) || StringUtils.isBlank(consumerSecret)) {
+			throw new TwitterException("Missing required credentials");
+		}
+		Twitter twitter = TwitterFactory.getSingleton();
+		twitter.setOAuthConsumer(consumerKey, consumerSecret);
+		loadAccessToken(twitter);
+		twitter.setOAuthAccessToken(authToken);
+		return twitter;
 	}
 
 }

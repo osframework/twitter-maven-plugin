@@ -1,0 +1,39 @@
+						--------------------
+						Usage
+						--------------------
+						Dave Joyce
+						--------------------
+						2013-05-23
+
+Usage
+
+	Some brief examples of how to use this plugin.
+
+* Configuring to send to Twitter
+
+	Example steps here.
+
++-----------------+
+<project>
+  ...
+  <build>
+    <plugins>
+      ...
+      <plugin>
+        <groupId>org.osframework.maven.plugins</groupId>
+        <artifactId>twitter-maven-plugin</artifactId>
+        <version>${project.version}</version>
+        <configuration>
+          ...
+        </configuration>
+      </plugin>
+      ...
+    </plugins>
+  </build>
+  ...
+</project>
++-----------------+
+
+* How to send through your Twitter account
+
+	Example steps here.

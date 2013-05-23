@@ -5,6 +5,20 @@
 						--------------------
 						2013-05-23
 
-Introduction
+Twitter Maven Plugin
 
-	The Twitter Maven Plugin is used to post Twitter updates as part of the Maven build lifecycle.
+	This plugin provides the capability to post Twitter updates as part of the Maven build lifecycle.
+
+* Goals Overview
+
+	* {{{./tweet-mojo.html}twitter:tweet}} post an update (aka 'tweet') of your project status to Twitter.
+
+	* {{{./dm-mojo.html}twitter:dm}} post a direct message (aka 'DM') of your project status to a Twitter recipient.
+
+	[]
+
+* Usage
+
+	General instructions on how to use the Twitter Plugin can be found on the {{{./usage.html}usage page}}. Additionally,
+	users occasionally contribute additional examples, tips or errata to the
+	{{{http://osframework.github.io/twitter-maven-plugin}plugin's wiki}}.
