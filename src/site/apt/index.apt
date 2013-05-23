@@ -1,0 +1,10 @@
+						--------------------
+						Twitter Maven Plugin
+						--------------------
+						Dave Joyce
+						--------------------
+						2013-05-23
+
+Introduction
+
+	The Twitter Maven Plugin is used to post Twitter updates as part of the Maven build lifecycle.
