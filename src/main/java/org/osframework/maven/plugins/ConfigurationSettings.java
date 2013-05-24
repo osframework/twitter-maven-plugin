@@ -31,6 +31,7 @@ public final class ConfigurationSettings {
 
 	public static final String ENCODING = PROPERTY_PREFIX + "encoding";
 	public static final String MESSAGE = PROPERTY_PREFIX + "message";
+	public static final String RECIPIENT_SCREEN_NAME = PROPERTY_PREFIX + "recipientScreenName";
 
 	public static final String OAUTH_CONSUMER_KEY = PROPERTY_PREFIX + PropertyConfiguration.OAUTH_CONSUMER_KEY;
 	public static final String OAUTH_CONSUMER_SECRET = PROPERTY_PREFIX + PropertyConfiguration.OAUTH_CONSUMER_SECRET;

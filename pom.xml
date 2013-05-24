@@ -14,9 +14,8 @@
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>maven-plugin</packaging>
 
-
 	<name>Twitter Maven Plugin</name>
-	<description>Posts Twitter updates from Maven build lifecycle</description>
+	<description>Post updates to Twitter from Maven build lifecycle</description>
 	<url>http://osframework.org/projects/twitter-maven-plugin/</url>
 	<inceptionYear>2013</inceptionYear>
 
@@ -27,7 +26,7 @@
 
 	<licenses>
 		<license>
-			<name>Apache License, Version 2.0</name>
+			<name>The Apache Software License, Version 2.0</name>
 			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
 			<distribution>repo</distribution>
 		</license>
@@ -46,12 +45,12 @@
 	</developers>
 
 	<scm>
-		<url>git@github.com/osframework/twitter-maven-plugin.git</url>
+		<url>http://github.com/osframework/twitter-maven-plugin</url>
 		<connection>scm:git:git://github.com/osframework/twitter-maven-plugin.git</connection>
 		<developerConnection>scm:git:https://github.com/osframework/twitter-maven-plugin.git</developerConnection>
 	</scm>
 	<issueManagement>
-		<system>GitHub</system>
+		<system>github</system>
 		<url>https://github.com/osframework/twitter-maven-plugin/issues</url>
 	</issueManagement>
 
@@ -65,27 +64,36 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.build.javaVersion>1.6</project.build.javaVersion>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<mavenVersion>3.0.3</mavenVersion>
 		<maven.build.timestamp.format>yyyy-MM-dd</maven.build.timestamp.format>
 		<buildTimestamp>${maven.build.timestamp}</buildTimestamp>
 
 		<!-- Dependency versions -->
+		<maven-plugin-testing-harness.version>2.1</maven-plugin-testing-harness.version>
 		<testng.version>6.8</testng.version>
 		<twitter4j-core.version>[3.0,)</twitter4j-core.version>
 
 		<!-- Plugin versions -->
 		<maven-compiler-plugin.version>3.0</maven-compiler-plugin.version>
+		<maven-project-info-reports-plugin.version>2.7</maven-project-info-reports-plugin.version>
+		<maven-plugin-plugin.version>3.2</maven-plugin-plugin.version>
 		<maven-surefire-plugin.version>2.12.4</maven-surefire-plugin.version>
 		<maven-jar-plugin.version>2.4</maven-jar-plugin.version>
+		<maven-jxr-plugin.version>2.3</maven-jxr-plugin.version>
 		<maven-source-plugin.version>2.2.1</maven-source-plugin.version>
 		<maven-javadoc-plugin.version>2.9</maven-javadoc-plugin.version>
 		<maven-deploy-plugin.version>2.7</maven-deploy-plugin.version>
 		<maven-gpg-plugin.version>1.4</maven-gpg-plugin.version>
-		
+
 		<!-- Wagon versions -->
 		<wagon-webdav-jackrabbit.version>2.2</wagon-webdav-jackrabbit.version>
 		<wagon-ssh.version>2.3</wagon-ssh.version>
 	</properties>
+
+	<prerequisites>
+		<maven>${mavenVersion}</maven>
+	</prerequisites>
 
 	<dependencies>
 		<!-- Maven dependencies -->
@@ -122,6 +130,12 @@
 			<version>${testng.version}</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.maven.plugin-testing</groupId>
+			<artifactId>maven-plugin-testing-harness</artifactId>
+			<version>${maven-plugin-testing-harness.version}</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -149,11 +163,57 @@
 				<version>${wagon-ssh.version}</version>
 			</extension>
 		</extensions>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>${maven-compiler-plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-plugin-plugin</artifactId>
+					<version>${maven-plugin-plugin.version}</version>
+					<configuration>
+						<goalPrefix>twitter</goalPrefix>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>${maven-surefire-plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>${maven-jar-plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>${maven-source-plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>${maven-javadoc-plugin.version}</version>
+				</plugin>
+				<plugin>
+				    <groupId>org.apache.maven.plugins</groupId>
+				    <artifactId>maven-jxr-plugin</artifactId>
+				    <version>${maven-jxr-plugin.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-project-info-reports-plugin</artifactId>
+					<version>${maven-project-info-reports-plugin.version}</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>${maven-compiler-plugin.version}</version>
 				<configuration>
 					<source>${project.build.javaVersion}</source>
 					<target>${project.build.javaVersion}</target>
@@ -161,20 +221,36 @@
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>${maven-surefire-plugin.version}</version>
+				<artifactId>maven-plugin-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>default-descriptor</id>
+						<goals>
+							<goal>descriptor</goal>
+						</goals>
+						<phase>process-classes</phase>
+					</execution>
+<!--
+					<execution>
+						<id>help-descriptor</id>
+						<goals>
+							<goal>helpmojo</goal>
+						</goals>
+						<phase>process-classes</phase>
+					</execution>
+-->
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
-				<version>${maven-jar-plugin.version}</version>
 				<configuration>
 					<archive>
 						<manifest>
 							<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
 						</manifest>
 						<manifestEntries>
-							<Build-Date>${buildTimestamp}</Build-Date>
+							<Build-Date>${maven.build.timestamp}</Build-Date>
 						</manifestEntries>
 					</archive>
 				</configuration>
@@ -182,7 +258,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
-				<version>${maven-source-plugin.version}</version>
 				<executions>
 					<execution>
 						<id>attach-sources</id>
@@ -196,7 +271,17 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>${maven-javadoc-plugin.version}</version>
+				<configuration>
+					<bootclasspath>${sun.boot.class.path}</bootclasspath>
+					<doctitle>${project.name} (${project.version})</doctitle>
+					<stylesheetfile>${basedir}/src/javadoc/stylesheet.css</stylesheetfile>
+					<javadocDirectory>${basedir}/src/javadoc</javadocDirectory>
+					<docfilessubdirs>true</docfilessubdirs>
+					<detectLinks>true</detectLinks>
+					<links>
+						<link>http://twitter4j.org/javadoc/</link>
+					</links>
+				</configuration>
 				<executions>
 					<execution>
 						<id>attach-javadoc</id>
@@ -213,9 +298,35 @@
 	<reporting>
 		<plugins>
 			<plugin>
+			    <groupId>org.apache.maven.plugins</groupId>
+			    <artifactId>maven-jxr-plugin</artifactId>
+			    <version>${maven-jxr-plugin.version}</version>
+			</plugin>
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>${maven-javadoc-plugin.version}</version>
+				<configuration>
+					<bootclasspath>${sun.boot.class.path}</bootclasspath>
+					<doctitle>${project.name} (${project.version})</doctitle>
+					<stylesheetfile>${basedir}/src/javadoc/stylesheet.css</stylesheetfile>
+					<javadocDirectory>${basedir}/src/javadoc</javadocDirectory>
+					<docfilessubdirs>true</docfilessubdirs>
+					<detectLinks>true</detectLinks>
+					<links>
+						<link>http://twitter4j.org/javadoc/</link>
+					</links>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-plugin-plugin</artifactId>
+				<version>${maven-plugin-plugin.version}</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-project-info-reports-plugin</artifactId>
+				<version>${maven-project-info-reports-plugin.version}</version>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
