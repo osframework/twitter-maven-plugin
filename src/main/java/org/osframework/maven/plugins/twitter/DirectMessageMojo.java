@@ -1,5 +1,5 @@
 /*
- * File: TweetMojo.java
+ * File: DirectMessageMojo.java
  * 
  * Copyright 2013 OSFramework Project.
  * 
@@ -15,7 +15,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.osframework.maven.plugins;
+package org.osframework.maven.plugins.twitter;
+
+import static org.osframework.maven.plugins.twitter.ConfigurationSettings.RECIPIENT_SCREEN_NAME;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -29,32 +31,37 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
 import org.codehaus.plexus.util.IOUtil;
 
-import twitter4j.Status;
+import twitter4j.DirectMessage;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 
 /**
- * Sends a status update to Twitter (aka 'tweet') via Twitter API.
+ * Sends a direct message to a Twitter recipient.
  * 
  * @since 1.0.0
  * @author <a href="mailto:dave@osframework.org">Dave Joyce</a>
- * @see <a href="https://dev.twitter.com/docs/api/1.1/post/statuses/update">POST statuses/update | Twitter Developers</a>
+ * @see <a href="https://dev.twitter.com/docs/api/1.1/post/direct_messages/new">POST direct_messages/new | Twitter Developers</a>
  */
-@Mojo(name = "tweet",
+@Mojo(name = "dm",
       defaultPhase = LifecyclePhase.DEPLOY,
       requiresProject = true,
       requiresOnline = true)
-public class TweetMojo extends AbstractTwitterMojo {
+public class DirectMessageMojo extends AbstractTwitterMojo {
+
+	@Parameter(property = RECIPIENT_SCREEN_NAME,
+			   required = true)
+	private String recipientScreenName;
 
 	protected void executeInTwitter(Twitter twitter) throws MojoExecutionException, MojoFailureException {
 		try {
-			Status status = twitter.updateStatus(getMessage());
-			getLog().info("Sent tweet: " + status.getText());
-			logStatus(status);
+			DirectMessage dm = twitter.sendDirectMessage(recipientScreenName, getMessage());
+			getLog().info("Sent direct message to @" + dm.getRecipientScreenName() + ": " + dm.getText());
+			logDirectMessage(dm);
 		} catch (TwitterException te) {
-			throw new MojoFailureException("Could not send tweet", te);
+			throw new MojoFailureException("Could not send direct message", te);
 		}
 	}
 
@@ -63,17 +70,19 @@ public class TweetMojo extends AbstractTwitterMojo {
 		return df.format(d);
 	}
 
-	private void logStatus(Status status) {
-		StringBuilder logMsg = new StringBuilder(formatDate(status.getCreatedAt()))
+	private void logDirectMessage(DirectMessage dm) {
+		StringBuilder logMsg = new StringBuilder(formatDate(dm.getCreatedAt()))
 		                           .append(" ")
-		                           .append(status.getText());
-		File logFile = new File(getWorkDirectory(), "tweet.log");
+		                           .append(dm.getRecipientScreenName())
+		                           .append(" ")
+		                           .append(dm.getText());
+		File logFile = new File(getWorkDirectory(), "dm.log");
 		BufferedWriter writer = null;
 		try {
 			writer = new BufferedWriter(new FileWriter(logFile, true));
 			writer.write(logMsg.toString());
 		} catch (IOException ioe) {
-			getLog().warn("Could not write status to tweet.log");
+			getLog().warn("Could not write status to dm.log");
 		} finally {
 			IOUtil.close(writer);
 		}

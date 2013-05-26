@@ -15,8 +15,8 @@
 	<packaging>maven-plugin</packaging>
 
 	<name>Twitter Maven Plugin</name>
-	<description>Post updates to Twitter from Maven build lifecycle</description>
-	<url>http://osframework.org/projects/twitter-maven-plugin/</url>
+	<description>Posts updates to Twitter from Maven build lifecycle</description>
+	<url>http://projects.osframework.org/twitter-maven-plugin/</url>
 	<inceptionYear>2013</inceptionYear>
 
 	<organization>
@@ -53,6 +53,15 @@
 		<system>github</system>
 		<url>https://github.com/osframework/twitter-maven-plugin/issues</url>
 	</issueManagement>
+	<mailingLists>
+		<mailingList>
+			<name>twitter-maven-plugin-users</name>
+			<post>twitter-maven-plugin-users@lists.osframework.org</post>
+			<subscribe>twitter-maven-plugin-users-subscribe@lists.osframework.org</subscribe>
+			<unsubscribe>twitter-maven-plugin-users-unsubscribe@lists.osframework.org</unsubscribe>
+			<archive>http://lists.osframework.org/private.cgi/twitter-maven-plugin-users-osframework.org/</archive>
+		</mailingList>
+	</mailingLists>
 
 	<distributionManagement>
 		<site>

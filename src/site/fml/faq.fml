@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faqs xmlns="http://maven.apache.org/FML/1.0.1"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/FML/1.0.1 http://maven.apache.org/xsd/fml-1.0.1.xsd"
+	title="Frequently Asked Questions">
+
+	<part id="general">
+		<title>General</title>
+
+		<faq id="how-do-i-create-a-twitter-account">
+			<question>How do I create a Twitter account?</question>
+			<answer>
+				<p>Create an account by signing up on the
+				<a href="https://twitter.com/">Twitter homepage</a>.</p>
+				<p><strong>NOTE:</strong> You may want to create a separate Twitter
+				account for your project(s).</p>
+			</answer>
+		</faq>
+
+		<faq id="how-do-i-register-plugin-on-my-twitter-account">
+			<question>How do I register this plugin on my Twitter account?</question>
+			<answer>
+				<p>some markup goes here</p>
+			</answer>
+		</faq>
+	</part>
+
+	<part id="configuration">
+		<title>Configuration</title>
+
+		<faq id="where-should-i-store-my-credentials">
+			<question>Where should I store my credentials?</question>
+			<answer>
+				<p>The credentials generated when you
+				<a href="#how-do-i-register-plugin-on-my-twitter-account">registered
+				this plugin on your Twitter account</a> tell Twitter which application
+				is accessing it, as well as determining what the application is
+				allowed to do. These credentials should be stored in the most private
+				location accessible to Maven - typically in your
+				<code>settings.xml</code>. You should <u>strongly avoid</u> storing
+				credentials in your project POM.</p>
+				<p>Twitter credentials can stored in <code>settings.xml</code> as
+				properties. They will then be available in all project POMs on your
+				local host. Here's an example:</p>
+				<source>
+<![CDATA[<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                      http://maven.apache.org/xsd/settings-1.0.0.xsd">
+  ...
+  <profiles>
+    <profile>
+      <id>twitter</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      ...
+      <properties>
+        <twitter.oauth.consumerKey>YOUR_CONSUMER_KEY</twitter.oauth.consumerKey>
+        <twitter.oauth.consumerSecret>YOUR_CONSUMER_SECRET</twitter.oauth.consumerSecret>
+        <twitter.oauth.accessToken>YOUR_ACCESS_TOKEN</twitter.oauth.accessToken>
+        <twitter.oauth.accessTokenSecret>YOUR_ACCESS_TOKEN_SECRET</twitter.oauth.accessTokenSecret>
+      </properties>
+      ...
+    </profile>
+  </profiles>
+  ...
+</settings>]]>
+				</source>
+			</answer>
+		</faq>
+	</part>
+</faqs>

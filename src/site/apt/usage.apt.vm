@@ -9,10 +9,9 @@ Usage
 
 	Some brief examples of how to use this plugin.
 
-* Configuring to send to Twitter
+* Using {{{./tweet-mojo.html}twitter:tweet}
 
-	Example steps here.
-
+ 
 +-----------------+
 <project>
   ...
@@ -34,6 +33,6 @@ Usage
 </project>
 +-----------------+
 
-* How to send through your Twitter account
+* Using {{{./dm-mojo.html}twitter:dm}
 
 	Example steps here.

@@ -15,15 +15,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.osframework.maven.plugins;
+package org.osframework.maven.plugins.twitter;
 
-import static org.osframework.maven.plugins.ConfigurationSettings.ENCODING;
-import static org.osframework.maven.plugins.ConfigurationSettings.MESSAGE;
-import static org.osframework.maven.plugins.ConfigurationSettings.OAUTH_ACCESS_TOKEN;
-import static org.osframework.maven.plugins.ConfigurationSettings.OAUTH_ACCESS_TOKEN_SECRET;
-import static org.osframework.maven.plugins.ConfigurationSettings.OAUTH_CONSUMER_KEY;
-import static org.osframework.maven.plugins.ConfigurationSettings.OAUTH_CONSUMER_SECRET;
-import static org.osframework.maven.plugins.ConfigurationSettings.WORK_DIRECTORY;
+import static org.osframework.maven.plugins.twitter.ConfigurationSettings.ENCODING;
+import static org.osframework.maven.plugins.twitter.ConfigurationSettings.MESSAGE;
+import static org.osframework.maven.plugins.twitter.ConfigurationSettings.OAUTH_ACCESS_TOKEN;
+import static org.osframework.maven.plugins.twitter.ConfigurationSettings.OAUTH_ACCESS_TOKEN_SECRET;
+import static org.osframework.maven.plugins.twitter.ConfigurationSettings.OAUTH_CONSUMER_KEY;
+import static org.osframework.maven.plugins.twitter.ConfigurationSettings.OAUTH_CONSUMER_SECRET;
+import static org.osframework.maven.plugins.twitter.ConfigurationSettings.WORK_DIRECTORY;
 
 import java.io.BufferedReader;
 import java.io.File;
