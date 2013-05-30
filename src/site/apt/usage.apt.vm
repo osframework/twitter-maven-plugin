@@ -9,7 +9,7 @@ Usage
 
 	Some brief examples of how to use this plugin.
 
-* Using {{{./tweet-mojo.html}twitter:tweet}
+* Using {{{./tweet-mojo.html}twitter:tweet}}
 
  
 +-----------------+
@@ -33,6 +33,6 @@ Usage
 </project>
 +-----------------+
 
-* Using {{{./dm-mojo.html}twitter:dm}
+* Using {{{./dm-mojo.html}twitter:dm}}
 
 	Example steps here.

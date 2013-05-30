@@ -19,18 +19,24 @@ h2 {
 	font-size: 1.35em;
 }
 
+/* Tables */
+table {
+	border-collapse: collapse;
+	border-color: #333333;
+}
+
 /* Table colors */
-.TableHeadingColor     { background: #CCCCFF; color:#000000 } /* Dark mauve */
-.TableSubHeadingColor  { background: #EEEEFF; color:#000000 } /* Light mauve */
-.TableRowColor         { background: #FFFFFF; color:#000000 } /* White */
+.TableHeadingColor     { background: #2079BD; } /* Logo blue */
+.TableSubHeadingColor  { background: #90BCDE; } /* Logo blue tint */
+.TableRowColor         { background: #FFFFFF; } /* White */
 
 /* Font used in left-hand frame lists */
-.FrameTitleFont   { font-size: 1em; color:#000000 }
-.FrameHeadingFont { font-size:  0.9em; color:#000000 }
-.FrameItemFont    { font-size:  0.9em; color:#000000 }
+.FrameTitleFont   { font-size: 1em; }
+.FrameHeadingFont { font-size: 0.9em; }
+.FrameItemFont    { font-size: 0.9em; }
 
 /* Navigation bar fonts and colors */
-.NavBarCell1    { background-color:#EEEEFF; color:#000000; } /* Light mauve */
+.NavBarCell1    { background-color:#90BCDE; color:#000000; } /* Light mauve */
 .NavBarCell1Rev { background-color:#00008B; color:#FFFFFF; } /* Dark Blue */
 .NavBarFont1    { color:#000000; }
 .NavBarFont1Rev { color:#FFFFFF; }

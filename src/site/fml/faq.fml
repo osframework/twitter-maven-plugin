@@ -20,7 +20,15 @@
 		<faq id="how-do-i-register-plugin-on-my-twitter-account">
 			<question>How do I register this plugin on my Twitter account?</question>
 			<answer>
-				<p>some markup goes here</p>
+				<p>Register this plugin as an app on your Twitter account by doing the
+				following:</p>
+				<ol>
+					<li>Sign in with your Twitter account at <a
+					    href="https://dev.twitter.com/apps">https://dev.twitter.com/apps</a>.</li>
+					<li>Click the 'Create a new application' button.</li>
+					<li>Complete the Create an application form. In the 'Name:' field, you
+					    may use <code>twitter-maven-plugin</code> or some other name.</li>
+				</ol>
 			</answer>
 		</faq>
 	</part>
